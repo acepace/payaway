@@ -12,13 +12,17 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".TestBarcode"
-            android:label="@string/title_activity_test_barcode"
-            >
+            android:label="@string/title_activity_test_barcode" >
+        </activity>
+        <activity
+            android:name=".TestBarcodeFragment"
+            android:label="@string/title_activity_test_barcode_fragment"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 
