@@ -31,7 +31,7 @@ public class Product implements Parcelable {
     public BigDecimal TotalPrice;
 
 
-    public Drawable picture;
+    public Drawable Picture = null;
 
     public Product()
     {
@@ -71,11 +71,12 @@ public class Product implements Parcelable {
         ImageUrl = in.readString();
         Amount = in.readInt();
         Price = new BigDecimal(in.readString());
-        TotalPrice =new  BigDecimal(in.readString());
+        TotalPrice =new BigDecimal(in.readString());
+        loadImage();
     }
 
     public void loadImage() {
-        picture = LoadImageFromWebOperations(ImageUrl);
+        Picture = LoadImageFromWebOperations(ImageUrl);
     }
 
     public static Drawable LoadImageFromWebOperations(String url) {
