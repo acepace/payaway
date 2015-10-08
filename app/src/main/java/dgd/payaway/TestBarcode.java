@@ -8,12 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class TestBarcode extends AppCompatActivity implements ZBarScannerView.ResultHandler {
 
     private ZBarScannerView mScannerView;
+
+
 
 
     @Override
@@ -37,6 +40,8 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
         super.onPause();
         mScannerView.stopCamera();           // Stop camera on pause
     }
+
+
 
     @Override
     public void handleResult(Result rawResult) {

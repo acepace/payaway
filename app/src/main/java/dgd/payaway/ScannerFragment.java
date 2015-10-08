@@ -21,6 +21,7 @@ import java.util.List;
 import me.dm7.barcodescanner.zbar.BarcodeFormat;
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
+import utils.CartManager;
 
 public class ScannerFragment extends Fragment implements MessageDialogFragment.MessageDialogListener,
 ZBarScannerView.ResultHandler, FormatSelectorDialogFragment.FormatSelectorDialogListener,
@@ -147,7 +148,10 @@ CameraSelectorDialogFragment.CameraSelectorDialogListener {
             Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
             r.play();
         } catch (Exception e) {}
-        showMessageDialog("Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
+
+        CartManager test = new CartManager("1337","7290027600007","19");
+        test.initCart(getActivity());
+        //("Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
     }
 
     public void showMessageDialog(String message) {
