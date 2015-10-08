@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +31,14 @@ public class CartManager {
     private String storeID;
     private String cartID;
 
+    public String getCartID() {return cartID;}
+    public String cartToken;
+
     public ArrayList<Product> cartProducts;
     private static ObjectMapper sMapper = new ObjectMapper();
 
     private OnCartItemsCallback callback;
+
 
     public CartManager(String userID,String chainID,String storeID,OnCartItemsCallback callback)
     {
@@ -55,6 +60,13 @@ public class CartManager {
 
     }
 
+    public BigDecimal getTotalPrice() {
+        BigDecimal totalPrice = new BigDecimal(0);
+        for (Product item: cartProducts) {
+            totalPrice = totalPrice.add(item.TotalPrice);
+        }
+        return totalPrice;
+    }
 
 
     public void initCart(Context context, final OnCartInitCallback callback)
@@ -79,6 +91,7 @@ public class CartManager {
                     // If the response is JSONObject instead of expected JSONArray
                     try {
                         cartID = response.getString("CartId");
+                        cartToken = response.getString("Token");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -118,7 +131,7 @@ public class CartManager {
     //Tries to load cart data
     public void loadCartData() {
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get( "http://payaway.me/api/cart/"+cartID, new JsonHttpResponseHandler() {
+        client.get( "http://payaway.me/api/cart/"+"b2236b10-45ca-4c08-b19a-e71fbf16373e", new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 // called before request is started
@@ -132,7 +145,6 @@ public class CartManager {
                 //get the cart items
                 try {
                     JSONArray productsJSON = response.getJSONArray("Products");
-
                     cartProducts = sMapper.readValue(productsJSON.toString(),
                             new TypeReference<ArrayList<Product>>() {
                             });
