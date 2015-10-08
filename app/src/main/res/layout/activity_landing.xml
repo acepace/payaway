@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Pick a chain"
+                android:hint="Loading nearby stores..."
                 android:textIsSelectable="true"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#FFFFFF" />
@@ -55,7 +55,8 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="12dp"
             android:padding="12dp"
-            android:text="Shop your way" />
+            android:text="Shop your way"
+            />
 
 
     </LinearLayout>

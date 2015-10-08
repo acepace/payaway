@@ -34,6 +34,7 @@ public class LandingActivity extends AppCompatActivity implements
 
     protected static final String TAG = "LandingActivity";
     private List<Store> mNearbyStores;
+    private Store pickedStore;
 
     protected GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
@@ -148,12 +149,19 @@ public class LandingActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         EditText storePicker = (EditText) findViewById(R.id.input_store);
                         storePicker.setText(storeNames.get(which));
+                        pickedStore = mNearbyStores.get(which);
                     }
                 });
         AlertDialog alert = builder.create();
         alert.show();
-
     }
 
 
+    public void pickedStoreClick(View v){
+        EditText storePicker = (EditText) findViewById(R.id.input_store);
+
+
+        Intent i = new Intent(getApplicationContext(), CartActivity.class);
+        startActivity(i);
+    }
 }
