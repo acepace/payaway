@@ -30,6 +30,7 @@ public class CartManager {
         this.userID = userID;
         this.chainID = chainID;
         this.storeID = storeID;
+        cartID = "BADFOOD";
     }
 
     public void initCart(Context context)
@@ -52,13 +53,12 @@ public class CartManager {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // If the response is JSONObject instead of expected JSONArray
-                    String test = null;
                     try {
-                        test = response.getString("CartId");
+                        cartID = response.getString("CartId");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(test);
+                    System.out.println(cartID);
                 }
 
                 @Override
