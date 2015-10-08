@@ -131,7 +131,7 @@ public class CartManager {
     //Tries to load cart data
     public void loadCartData() {
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get( "http://payaway.me/api/cart/"+"b2236b10-45ca-4c08-b19a-e71fbf16373e", new JsonHttpResponseHandler() {
+        client.get( "http://payaway.me/api/cart/"+cartID, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 // called before request is started
