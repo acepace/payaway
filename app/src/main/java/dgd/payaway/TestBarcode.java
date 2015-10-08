@@ -1,8 +1,10 @@
 package dgd.payaway;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,20 +12,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
+import utils.Product;
 
-public class TestBarcode extends AppCompatActivity implements ZBarScannerView.ResultHandler {
+public class TestBarcode extends AppCompatActivity implements ZBarScannerView.ResultHandler,Product.onProductLoadedCallback {
 
     private ZBarScannerView mScannerView;
     private EditText quantity;
+    private String mCartID;
 
+    private Product mProd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_barcode);
+
+        Intent i = getIntent();
+        mCartID = i.getStringExtra("cartID");
+
         this.quantity = (EditText) findViewById(R.id.quantity);
         quantity.setText("0");
         mScannerView = new ZBarScannerView(this);
@@ -36,7 +48,7 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
                 int numOfItems = Integer.valueOf(charSequence.toString());
                 numOfItems++;
                 quantity.setText(String.valueOf(numOfItems));
-
+                UpdatePrice(numOfItems);
             }
         });
 
@@ -54,10 +66,17 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
 
                 numOfItems --;
                 quantity.setText(String.valueOf(numOfItems));
-
+                UpdatePrice(numOfItems);
             }
         });
 
+    }
+
+    private void UpdatePrice(int numOfItems) {
+        mProd.Amount = numOfItems;
+        TextView pl = (TextView) findViewById(R.id.ProdPriceLbl);
+        String price = new DecimalFormat("#0.##₪").format(mProd.getTotalPrice());
+        pl.setText(price);
     }
 
     @Override
@@ -101,6 +120,41 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
         // Do something with the result here
         Log.v("blah", rawResult.getContents()); // Prints scan results
         Log.v("blah", rawResult.getBarcodeFormat().getName()); // Prints the scan format (qrcode, pdf417 etc.)
+        Product.getProduct(this,mCartID,rawResult.getContents(),this);
     }
 
+    @Override
+    public void ProductLoaded(Product p) {
+        mProd = p;
+
+        TextView tv = (TextView) findViewById(R.id.ProdNameLbl);
+        tv.setText(mProd.Name);
+        String price = "0.00$";
+        if (mProd.Amount == 0) {
+             price = new DecimalFormat("(#0.##₪)").format(mProd.Price);
+        } else {
+            price = new DecimalFormat("#0.##₪").format(mProd.TotalPrice);
+        }
+
+        TextView pl = (TextView) findViewById(R.id.ProdPriceLbl);
+        pl.setText(price);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent data = new Intent();
+        setResult(0, data);
+        //---close the activity---
+        finish();
+    }
+
+    public void onConfirmClick(View v)
+    {
+        Intent data = new Intent();
+        data.putExtra("Product",mProd);
+        setResult(1, data);
+        //---close the activity---
+        finish();
+    }
 }

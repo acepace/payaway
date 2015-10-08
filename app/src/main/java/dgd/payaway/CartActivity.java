@@ -64,7 +64,8 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
             public void onClick(View view)
             {
                 Intent i = new Intent(getApplicationContext(), TestBarcode.class);
-                startActivity(i);
+                i.putExtra("cartID",mCart.getCartID());
+                startActivityForResult(i,0x100);
             }
         });
 
@@ -133,7 +134,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100) {
+        if (requestCode == 100) { //return from braintree
             switch (resultCode) {
                 case BraintreePaymentActivity.RESULT_OK:
                     String paymentMethodNonce = data
@@ -146,6 +147,22 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
                     // handle errors here, a throwable may be available in
                     // data.getSerializableExtra(BraintreePaymentActivity.EXTRA_ERROR_MESSAGE)
                     break;
+                default:
+                    break;
+            }
+        } else if (requestCode == 0x100) //Scanner
+        {
+            switch (resultCode) {
+                case 0:
+                    //Failed
+                    Log.i(TAG,"User did not want to add an item");
+                    break;
+                case 1:
+                    Product newProd = data.getParcelableExtra("Product");
+                    mCart.cartProducts.add(newProd);
+                    OnCartItemsLoaded();
+                    break;
+
                 default:
                     break;
             }
