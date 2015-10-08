@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RowViewHolder> {
     Context context;
-    ArrayList<RowItems> itemsList;
+    ArrayList<CartItem> itemsList;
 
-    public RecyclerViewAdapter(Context context, ArrayList<RowItems> itemsList) {
+    public RecyclerViewAdapter(Context context, ArrayList<CartItem> itemsList) {
         this.context = context;
         this.itemsList = itemsList;
     }
@@ -36,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RowViewHolder> {
 
     @Override
     public void onBindViewHolder(RowViewHolder rowViewHolder, int position) {
-        RowItems items = itemsList.get(position);
+        CartItem items = itemsList.get(position);
         rowViewHolder.name.setText(String.valueOf(items.getTitle()));
         rowViewHolder.productImage.setBackgroundResource(items.getIcon());
     }

@@ -1,6 +1,6 @@
 package dgd.payaway;
 
-public class RowItems
+public class CartItem
 {
     private String title;
     private int icon;
