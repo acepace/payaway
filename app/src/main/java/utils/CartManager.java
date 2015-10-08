@@ -63,9 +63,18 @@ public class CartManager {
     public BigDecimal getTotalPrice() {
         BigDecimal totalPrice = new BigDecimal(0);
         for (Product item: cartProducts) {
-            totalPrice = totalPrice.add(item.TotalPrice);
+            totalPrice = totalPrice.add(item.getTotalPrice());
         }
         return totalPrice;
+    }
+
+    public int getTotalItems()
+    {
+        int total = 0;
+        for (Product item: cartProducts) {
+            total += item.Amount;
+        }
+        return total;
     }
 
 
