@@ -1,18 +1,15 @@
 package dgd.payaway;
 
-import android.graphics.Point;
-import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
-
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
@@ -20,27 +17,47 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
 public class TestBarcode extends AppCompatActivity implements ZBarScannerView.ResultHandler {
 
     private ZBarScannerView mScannerView;
-
-
+    private EditText quantity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_barcode);
+        this.quantity = (EditText) findViewById(R.id.quantity);
+        quantity.setText("0");
         mScannerView = new ZBarScannerView(this);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, 500);
-//
-//        android.hardware.Camera.CameraInfo info =
-//                new android.hardware.Camera.CameraInfo();
-//        android.hardware.Camera.getCameraInfo(Camera.CameraInfo.CAMERA_FACING_BACK, info);
-                      // Set the scanner view as the content view
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.zk_layout);
         linearLayout.addView(mScannerView);
+        findViewById(R.id.btn_plus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CharSequence charSequence = quantity.getText().toString();
+                int numOfItems = Integer.valueOf(charSequence.toString());
+                numOfItems++;
+                quantity.setText(String.valueOf(numOfItems));
+
+            }
+        });
+
+        findViewById(R.id.btn_minus).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                CharSequence charSequence = quantity.getText().toString();
+                int numOfItems = Integer.valueOf(charSequence.toString());
+                if (numOfItems == 0)
+                {
+                    return;
+                }
+
+                numOfItems --;
+                quantity.setText(String.valueOf(numOfItems));
+
+            }
+        });
+
     }
 
     @Override
@@ -57,7 +74,27 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
         mScannerView.stopCamera();           // Stop camera on pause
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.checkoutBtn:
+                //openSearch();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void handleResult(Result rawResult) {
