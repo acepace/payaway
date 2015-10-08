@@ -1,6 +1,9 @@
 package dgd.payaway;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,7 +66,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TestBarcode.class);
                 i.putExtra("cartID",mCart.getCartID());
-                startActivityForResult(i,0x100);
+                startActivityForResult(i, 0x100);
             }
         });
 
@@ -103,7 +106,8 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
-        return super.onCreateOptionsMenu(menu);
+        boolean bool =  super.onCreateOptionsMenu(menu);
+        return bool;
     }
 
     @Override
