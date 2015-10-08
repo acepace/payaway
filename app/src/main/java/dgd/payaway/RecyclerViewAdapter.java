@@ -46,6 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RowViewHolder> {
                 .with(context)
                 .load(item.ImageUrl)
                 .placeholder(R.drawable.pa_icon)
+                .error(R.drawable.pa_icon)
                 .into(rowViewHolder.productImage);
     }
 }
