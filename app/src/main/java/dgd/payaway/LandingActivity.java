@@ -16,11 +16,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import utils.CartManager;
 import utils.ChainFinder;
 import utils.Store;
@@ -43,33 +48,10 @@ public class LandingActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
-        findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), CartActivity.class);
-                startActivity(i);
-            }
-        });
+
         buildGoogleApiClient();
         mMapper = new ObjectMapper();
 
-
-    }
-
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        Bundle extras = intent.getExtras();
-        String chainJSON = extras.getString("jsonChainList");
-
-        try {
-            List<Store> list = mMapper.readValue(chainJSON,
-                    new TypeReference<ArrayList<Store>>() {});
-
-            setNearbyStoreList(list);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -106,11 +88,47 @@ public class LandingActivity extends AppCompatActivity implements
         // applications that do not require a fine-grained location and that do not need location
         // updates. Gets the best and most recent location currently available, which may be null
         // in rare cases when a location is not available.
+        Log.i(TAG,"connected to service");
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            ChainFinder.GetNearbyStores(this,mLastLocation);
-            //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-            //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+
+            JsonHttpResponseHandler handler =  new JsonHttpResponseHandler() {
+                @Override
+                public void onStart() {
+                    // called before request is started
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    // If the response is JSONObject instead of expected JSONArray
+                    Log.e(TAG, "Received object instead of array");
+                }
+
+                @Override
+                public void onFailure(int statusCode,
+                                      cz.msebera.android.httpclient.Header[] headers,
+                                      java.lang.Throwable throwable,
+                                      org.json.JSONObject errorResponse) {
+                    Log.e(TAG,"Failed to find chains");
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                    // Pull out the first event on the public timeline
+                    System.out.println("yay");
+                    try {
+                        List<Store> list = mMapper.readValue(timeline.toString(),
+                                new TypeReference<ArrayList<Store>>() {});
+                        setNearbyStoreList(list);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            };
+
+            ChainFinder.GetNearbyStores(this,mLastLocation,handler);
         } else {
             Toast.makeText(this, R.string.no_location_detected, Toast.LENGTH_LONG).show();
         }
@@ -158,10 +176,11 @@ public class LandingActivity extends AppCompatActivity implements
 
 
     public void pickedStoreClick(View v){
-        EditText storePicker = (EditText) findViewById(R.id.input_store);
-
 
         Intent i = new Intent(getApplicationContext(), CartActivity.class);
+        i.putExtra("pickedStore",pickedStore);
         startActivity(i);
     }
+
+
 }
