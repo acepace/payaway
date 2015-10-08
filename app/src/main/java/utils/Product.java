@@ -132,7 +132,8 @@ public class Product implements Parcelable {
                                       cz.msebera.android.httpclient.Header[] headers,
                                       java.lang.Throwable throwable,
                                       org.json.JSONObject errorResponse) {
-                    System.out.println(TAG + "wtf");
+                    System.out.println(TAG + "failed to load Product");
+                    callback.ProductLoaded(null);
                 }
 
                 @Override

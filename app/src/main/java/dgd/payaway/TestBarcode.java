@@ -39,6 +39,7 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
         this.quantity = (EditText) findViewById(R.id.quantity);
         quantity.setText("0");
         mScannerView = new ZBarScannerView(this);
+        mScannerView.setAutoFocus(true);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.zk_layout);
         linearLayout.addView(mScannerView);
         findViewById(R.id.btn_plus).setOnClickListener(new View.OnClickListener() {
@@ -121,10 +122,18 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
         Log.v("blah", rawResult.getContents()); // Prints scan results
         Log.v("blah", rawResult.getBarcodeFormat().getName()); // Prints the scan format (qrcode, pdf417 etc.)
         Product.getProduct(this,mCartID,rawResult.getContents(),this);
+
     }
 
     @Override
     public void ProductLoaded(Product p) {
+
+
+        if (p == null) {
+            mScannerView.stopCamera();
+            mScannerView.startCamera();
+            return;
+        }
         mProd = p;
 
         TextView tv = (TextView) findViewById(R.id.ProdNameLbl);
