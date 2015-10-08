@@ -116,7 +116,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
 
                 Customization customization = new Customization.CustomizationBuilder()
                         .primaryDescription("Shopping cart")
-                        .secondaryDescription(itemsList.size() + " Items")
+                        .secondaryDescription(mCart.getTotalItems() + " Items")
                         .amount(mCart.getTotalPrice().toString()+"₪")
                         .submitButtonText("Purchase")
                         .build();
