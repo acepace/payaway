@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#f6f6f5">
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#f6f6f5">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent" >
     </android.support.v7.widget.RecyclerView>
     <ImageButton
@@ -17,7 +19,9 @@
         android:layout_height="70dp"
         android:background="@drawable/ic_add_to_cart"
         android:id="@+id/imageButton"
-        android:layout_gravity="right|bottom" />
+        android:layout_gravity="right|bottom"
+        android:clickable="true"
+        android:onClick="onClick"/>
     </FrameLayout>
 
 </RelativeLayout>

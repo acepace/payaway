@@ -9,14 +9,14 @@ public class RowViewHolder extends RecyclerView.ViewHolder {
 
     ImageView productImage;
     TextView name;
-    TextView quantity;
-    TextView price;
+    TextView pricePerUnit;
+    TextView totalPrice;
 
     public RowViewHolder(View view) {
         super(view);
-        this.name = (TextView) view.findViewById(R.id.title);
-        this.productImage = (ImageView) view.findViewById(R.id.image);
-        this.quantity = (TextView) view.findViewById(R.id.quantity);
-        this.price = (TextView) view.findViewById(R.id.price);
+        this.name = (TextView) view.findViewById(R.id.product_name);
+        this.productImage = (ImageView) view.findViewById(R.id.product_image);
+        this.pricePerUnit = (TextView) view.findViewById(R.id.price_per_unit);
+        this.totalPrice = (TextView) view.findViewById(R.id.total_price);
     }
 }

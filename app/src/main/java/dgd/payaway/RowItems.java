@@ -4,8 +4,8 @@ public class RowItems
 {
     private String title;
     private int icon;
-    private double price;
-    private int quantity;
+    private double totalPrice;
+    private double pricePerUnit;
 
     public String getTitle() {
         return title;
@@ -23,19 +23,19 @@ public class RowItems
         this.icon = icon;
     }
 
-    public double getPrice() {
-        return price;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public double getPricePerUnit() {
+        return pricePerUnit;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setPricePerUnit(double pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
     }
 }
