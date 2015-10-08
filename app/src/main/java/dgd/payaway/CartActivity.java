@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -57,7 +58,8 @@ public class CartActivity extends ActionBarActivity
 
     }
 
-    public ArrayList<CartItem> getDummyDatas()
+    ///If cart information exists, lets load it
+    public ArrayList<CartItem> getCartData()
     {
         ArrayList<CartItem> it = new ArrayList<CartItem>();
         CartItem items1 = new CartItem();
@@ -88,5 +90,18 @@ public class CartActivity extends ActionBarActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.checkoutBtn:
+                //openSearch();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
