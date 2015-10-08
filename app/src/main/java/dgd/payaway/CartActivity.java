@@ -12,18 +12,34 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
+import utils.CartManager;
+import utils.Store;
+
 public class CartActivity extends ActionBarActivity
 {
     RecyclerView recyclerView;
-    ArrayList<RowItems> itemsList = new ArrayList<>();
+
+    Store mPickedStore;
+    CartManager mCart;
+
+    ArrayList<CartItem> itemsList = new ArrayList<>();
     RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+
+        Intent i = getIntent();
+        mPickedStore = i.getParcelableExtra("pickedStore");
+
+        mCart = new CartManager("1337",mPickedStore.ChainId,mPickedStore.StoreId);
+        mCart.initCart(this);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         ImageButton productChooserButton = (ImageButton) findViewById(R.id.imageButton);
 
         productChooserButton.setOnClickListener(new View.OnClickListener() {
@@ -35,27 +51,28 @@ public class CartActivity extends ActionBarActivity
             }
         });
 
-        adapter = new RecyclerViewAdapter(CartActivity.this, getData());
+        ArrayList<CartItem> it = new ArrayList<CartItem>(); //set something emptpy up front
+        adapter = new RecyclerViewAdapter(CartActivity.this, it);
         recyclerView.setAdapter(adapter);
 
     }
 
-    public ArrayList<RowItems> getData()
+    public ArrayList<CartItem> getDummyDatas()
     {
-        ArrayList<RowItems> it = new ArrayList<RowItems>();
-        RowItems items1 = new RowItems();
+        ArrayList<CartItem> it = new ArrayList<CartItem>();
+        CartItem items1 = new CartItem();
         items1.setTitle("Banana");
         items1.setIcon(R.drawable.pa_icon);
         items1.setPricePerUnit(3);
         items1.setTotalPrice(9);
         it.add(items1);
-        RowItems items2 = new RowItems();
+        CartItem items2 = new CartItem();
         items2.setTitle("Banana");
         items2.setIcon(R.drawable.pa_icon);
         items2.setPricePerUnit(3);
         items2.setTotalPrice(9);
         it.add(items2);
-        RowItems items3 = new RowItems();
+        CartItem items3 = new CartItem();
         items3.setTitle("Banana");
         items3.setIcon(R.drawable.pa_icon);
         items3.setPricePerUnit(3);
