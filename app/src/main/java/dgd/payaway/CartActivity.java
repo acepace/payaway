@@ -12,18 +12,20 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import utils.CartManager;
+import utils.Product;
 import utils.Store;
 
-public class CartActivity extends ActionBarActivity
+public class CartActivity extends ActionBarActivity implements CartManager.OnCartItemsCallback
 {
     RecyclerView recyclerView;
 
     Store mPickedStore;
     CartManager mCart;
 
-    ArrayList<CartItem> itemsList = new ArrayList<>();
+    ArrayList<Product> itemsList = new ArrayList<>();
     RecyclerViewAdapter adapter;
 
     @Override
@@ -31,12 +33,16 @@ public class CartActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-
         Intent i = getIntent();
         mPickedStore = i.getParcelableExtra("pickedStore");
 
-        mCart = new CartManager("1337",mPickedStore.ChainId,mPickedStore.StoreId);
-        mCart.initCart(this);
+        mCart = new CartManager("1337",mPickedStore.ChainId,mPickedStore.StoreId,this);
+        mCart.initCart(this,new CartManager.OnCartInitCallback(){
+            @Override
+            public void OnCartInit(boolean success, String CartID){
+                mCart.loadCartData();
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,37 +58,14 @@ public class CartActivity extends ActionBarActivity
             }
         });
 
-        ArrayList<CartItem> it = new ArrayList<CartItem>(); //set something emptpy up front
+        ArrayList<Product> it = new ArrayList<Product>();
+
         adapter = new RecyclerViewAdapter(CartActivity.this, it);
         recyclerView.setAdapter(adapter);
 
     }
 
-    ///If cart information exists, lets load it
-    public ArrayList<CartItem> getCartData()
-    {
-        ArrayList<CartItem> it = new ArrayList<CartItem>();
-        CartItem items1 = new CartItem();
-        items1.setTitle("Banana");
-        items1.setIcon(R.drawable.pa_icon);
-        items1.setPricePerUnit(3);
-        items1.setTotalPrice(9);
-        it.add(items1);
-        CartItem items2 = new CartItem();
-        items2.setTitle("Banana");
-        items2.setIcon(R.drawable.pa_icon);
-        items2.setPricePerUnit(3);
-        items2.setTotalPrice(9);
-        it.add(items2);
-        CartItem items3 = new CartItem();
-        items3.setTitle("Banana");
-        items3.setIcon(R.drawable.pa_icon);
-        items3.setPricePerUnit(3);
-        items3.setTotalPrice(9);
-        it.add(items3);
 
-        return it;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,5 +86,14 @@ public class CartActivity extends ActionBarActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void OnCartItemsLoaded() {
+
+        itemsList = mCart.cartProducts;
+        adapter.itemsList = itemsList;
+        adapter.notifyDataSetChanged();
+
     }
 }

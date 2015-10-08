@@ -149,8 +149,8 @@ CameraSelectorDialogFragment.CameraSelectorDialogListener {
             r.play();
         } catch (Exception e) {}
 
-        CartManager test = new CartManager("1337","7290027600007","19");
-        test.initCart(getActivity());
+        //CartManager test = new CartManager("1337","7290027600007","19");
+        //test.initCart(getActivity());
         //("Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
     }
 

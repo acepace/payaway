@@ -8,11 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
+import utils.Product;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RowViewHolder> {
     Context context;
-    ArrayList<CartItem> itemsList;
+    ArrayList<Product> itemsList;
 
-    public RecyclerViewAdapter(Context context, ArrayList<CartItem> itemsList) {
+    public RecyclerViewAdapter(Context context, ArrayList<Product> itemsList) {
         this.context = context;
         this.itemsList = itemsList;
     }
@@ -36,8 +40,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RowViewHolder> {
 
     @Override
     public void onBindViewHolder(RowViewHolder rowViewHolder, int position) {
-        CartItem items = itemsList.get(position);
-        rowViewHolder.name.setText(String.valueOf(items.getTitle()));
-        rowViewHolder.productImage.setBackgroundResource(items.getIcon());
+        Product item = itemsList.get(position);
+        rowViewHolder.name.setText(item.Name);
+        Picasso
+                .with(context)
+                .load(item.ImageUrl)
+                .placeholder(R.drawable.pa_icon)
+                .into(rowViewHolder.productImage);
     }
 }

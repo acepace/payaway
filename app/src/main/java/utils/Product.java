@@ -7,10 +7,13 @@ import android.os.Parcelable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
+
+import dgd.payaway.R;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Product implements Parcelable {
@@ -31,7 +34,6 @@ public class Product implements Parcelable {
     public BigDecimal TotalPrice;
 
 
-    public Drawable Picture = null;
 
     public Product()
     {
@@ -71,21 +73,7 @@ public class Product implements Parcelable {
         ImageUrl = in.readString();
         Amount = in.readInt();
         Price = new BigDecimal(in.readString());
-        TotalPrice =new BigDecimal(in.readString());
-        loadImage();
+        TotalPrice = new BigDecimal(in.readString());
     }
 
-    public void loadImage() {
-        Picture = LoadImageFromWebOperations(ImageUrl);
-    }
-
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "imageSrc");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

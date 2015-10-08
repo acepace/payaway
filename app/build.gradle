@@ -31,7 +31,7 @@ dependencies {
     compile 'me.dm7.barcodescanner:zbar:1.8.3'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.android.support:recyclerview-v7:23.0.+'
-    compile files('libs/picasso-2.3.4.jar')
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.braintreepayments.api:braintree:1.+'
     compile 'com.google.android.gms:play-services-wallet:8.1.0'
