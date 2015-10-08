@@ -177,13 +177,15 @@ public class LandingActivity extends AppCompatActivity implements
 
     public void pickedStoreClick(View v){
 
-        Intent i = new Intent(getApplicationContext(), CartActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CartActivity.class);
         if (null == pickedStore){
             Toast.makeText(this,"Wait for stores to load!", Toast.LENGTH_LONG);
             return;
         }
-        i.putExtra("pickedStore",pickedStore);
-        startActivity(i);
+        intent.putExtra("pickedStore",pickedStore);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(intent);
     }
 
 
