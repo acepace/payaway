@@ -20,7 +20,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import utils.CartManager;
@@ -61,8 +60,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
 
         productChooserButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TestBarcode.class);
                 i.putExtra("cartID",mCart.getCartID());
                 startActivityForResult(i,0x100);
@@ -74,6 +72,11 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         adapter = new RecyclerViewAdapter(CartActivity.this, it);
         recyclerView.setAdapter(adapter);
 
+        initSwipeToDismissTouchHelper();
+
+    }
+
+    private void initSwipeToDismissTouchHelper() {
         ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -92,9 +95,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
             }
         });
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
-
     }
-
 
 
     @Override
