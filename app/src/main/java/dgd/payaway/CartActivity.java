@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,6 +72,25 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
 
         adapter = new RecyclerViewAdapter(CartActivity.this, it);
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                // callback for drag-n-drop, false to skip this feature
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+            {
+                // callback for swipe to dismiss, removing item from data and adapter
+                itemsList.remove(viewHolder.getAdapterPosition());
+                //TODO: Update the server about deleting
+                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+        });
+        swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
 
     }
 
@@ -169,6 +189,5 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         itemsList = mCart.cartProducts;
         adapter.itemsList = itemsList;
         adapter.notifyDataSetChanged();
-
     }
 }
