@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".TestBarcode"
-            android:label="@string/title_activity_test_barcode" >
+            android:label="@string/title_activity_test_barcode"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".LandingActivity"
@@ -33,9 +34,6 @@
             android:name=".CartActivity"
             android:label="PayAway"
             android:theme="@style/AppTheme" >
-        </activity>
-        <activity android:name=".CheckoutActivity" >
-
         </activity>
     </application>
 
