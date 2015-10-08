@@ -1,6 +1,9 @@
 package dgd.payaway;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +23,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import utils.CartManager;
@@ -61,11 +63,10 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
 
         productChooserButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TestBarcode.class);
                 i.putExtra("cartID",mCart.getCartID());
-                startActivityForResult(i,0x100);
+                startActivityForResult(i, 0x100);
             }
         });
 
@@ -74,6 +75,11 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         adapter = new RecyclerViewAdapter(CartActivity.this, it);
         recyclerView.setAdapter(adapter);
 
+        initSwipeToDismissTouchHelper();
+
+    }
+
+    private void initSwipeToDismissTouchHelper() {
         ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -92,9 +98,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
             }
         });
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
-
     }
-
 
 
     @Override
@@ -102,7 +106,8 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
-        return super.onCreateOptionsMenu(menu);
+        boolean bool =  super.onCreateOptionsMenu(menu);
+        return bool;
     }
 
     @Override
