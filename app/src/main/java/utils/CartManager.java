@@ -50,8 +50,6 @@ public class CartManager {
     private OnCartItemsCallback callback;
 
 
-    private static final int WHITE = 0xFFFFFFFF;
-    private static final int BLACK = 0xFF000000;
 
     public CartManager(String userID,String chainID,String storeID,OnCartItemsCallback callback)
     {
@@ -192,39 +190,7 @@ public class CartManager {
         });
     }
 
-    public Bitmap generateQRtoken()
-    {
-        Bitmap bitmap = null;
-        try {
-            bitmap = encodeAsBitmap(cartToken);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
 
-    private Bitmap encodeAsBitmap(String str) throws WriterException {
-        BitMatrix result;
-        try {
-            result = new MultiFormatWriter().encode(str,
-                    BarcodeFormat.QR_CODE, 125, 125, null);
-        } catch (IllegalArgumentException iae) {
-            // Unsupported format
-            return null;
-        }
-        int w = result.getWidth();
-        int h = result.getHeight();
-        int[] pixels = new int[w * h];
-        for (int y = 0; y < h; y++) {
-            int offset = y * w;
-            for (int x = 0; x < w; x++) {
-                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
-            }
-        }
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, 125, 0, 0, w, h);
-        return bitmap;
-    }
 }
 
 

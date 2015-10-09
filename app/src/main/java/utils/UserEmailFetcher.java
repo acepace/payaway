@@ -10,6 +10,10 @@ import android.content.Context;
  */
 public class UserEmailFetcher {
 
+
+    private static final int WHITE = 0xFFFFFFFF;
+    private static final int BLACK = 0xFF000000;
+
     public static String getEmail(Context context) {
         AccountManager accountManager = AccountManager.get(context);
         Account account = getAccount(accountManager);

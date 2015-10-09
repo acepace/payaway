@@ -148,7 +148,8 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
 
 
         price = new DecimalFormat("#0.##₪").format(mProd.getTotalPrice());
-
+        EditText numItemsEt = (EditText) findViewById(R.id.quantity);
+        numItemsEt.setText(String.valueOf(mProd.Amount));
         TextView pl = (TextView) findViewById(R.id.ProdPriceLbl);
         pl.setText(price);
 

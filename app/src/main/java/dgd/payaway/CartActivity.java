@@ -193,7 +193,11 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
                 // Successfully got a response
                 Log.i(TAG, "Suceeded to send payment nonce");
                 if (responseString.equals("true")) {
+                    Intent intent = new Intent(getApplicationContext(), Checkout.class);
+                    intent.putExtra("cartID",mCart.getCartID());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
+                    startActivity(intent);
                     //
                 }
             }
