@@ -94,7 +94,7 @@ public class Product implements Parcelable {
         TotalPrice = new BigDecimal(in.readString());
     }
 
-    public static void getProduct(Context context,String CartID,String ProductID,final onProductLoadedCallback callback)
+    public static void getProduct(Context context,String CartID, final String ProductID,final onProductLoadedCallback callback)
     {
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -115,7 +115,7 @@ public class Product implements Parcelable {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // If the response is JSONObject instead of expected JSONArray
-                    Log.i(TAG,"Received object");
+                    Log.i(TAG,"Received object for ID"+ProductID);
                     try {
                         Product newProduct = sMapper.readValue(response.toString(),
                                 new TypeReference<Product>() {
@@ -132,7 +132,7 @@ public class Product implements Parcelable {
                                       cz.msebera.android.httpclient.Header[] headers,
                                       java.lang.Throwable throwable,
                                       org.json.JSONObject errorResponse) {
-                    System.out.println(TAG + "failed to load Product");
+                    System.out.println(TAG + "failed to load Product. ID==" + ProductID);
                     callback.ProductLoaded(null);
                 }
 

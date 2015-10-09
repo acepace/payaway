@@ -42,6 +42,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RowViewHolder> {
     public void onBindViewHolder(RowViewHolder rowViewHolder, int position) {
         Product item = itemsList.get(position);
         rowViewHolder.name.setText(item.Name);
+        rowViewHolder.pricePerUnit.setText(item.Price.toString());
+        rowViewHolder.totalPrice.setText(item.getTotalPrice().toString());
         Picasso
                 .with(context)
                 .load(item.ImageUrl)

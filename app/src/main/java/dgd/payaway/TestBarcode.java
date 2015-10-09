@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
@@ -132,6 +133,7 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
         if (p == null) {
             mScannerView.stopCamera();
             mScannerView.startCamera();
+            Toast.makeText(this,"Failed to find product.", Toast.LENGTH_LONG);
             return;
         }
         mProd = p;
@@ -160,6 +162,7 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
 
     public void onConfirmClick(View v)
     {
+        Product.updateProduct(this,mCartID,mProd);
         Intent data = new Intent();
         data.putExtra("Product",mProd);
         setResult(1, data);

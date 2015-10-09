@@ -63,6 +63,6 @@
     <string name="customer">Customer</string>
     <string name="customer_summary">The customer id to use</string>
     <string name="no_location_detected">No location detected</string>
-    <string name="nearbyStores">תבר חנות קרובה אליךn</string>
+    <string name="nearbyStores">תבחר את החנות...</string>
 
 </resources>

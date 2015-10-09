@@ -28,6 +28,7 @@ import cz.msebera.android.httpclient.Header;
 import utils.CartManager;
 import utils.Product;
 import utils.Store;
+import utils.UserEmailFetcher;
 
 public class CartActivity extends ActionBarActivity implements CartManager.OnCartItemsCallback
 {
@@ -48,7 +49,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         Intent i = getIntent();
         mPickedStore = i.getParcelableExtra("pickedStore");
 
-        mCart = new CartManager("1337",mPickedStore.ChainId,mPickedStore.StoreId,this);
+        mCart = new CartManager(UserEmailFetcher.getEmail(this),mPickedStore.ChainId,mPickedStore.StoreId,this);
         mCart.initCart(this,new CartManager.OnCartInitCallback(){
             @Override
             public void OnCartInit(boolean success, String CartID){
@@ -178,7 +179,8 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         AsyncHttpClient client = new AsyncHttpClient();
         String cartID = mCart.getCartID();
         String url = String.format("http://payaway.me/api/cart/%s?nonce=%s",cartID,nonce);
-        client.delete(url,new TextHttpResponseHandler() {
+        Log.i(TAG,url);
+        client.delete(url, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e(TAG, "Failed to send payment nonce");
@@ -188,8 +190,9 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 // Successfully got a response
                 Log.i(TAG, "Suceeded to send payment nonce");
-                if (responseString.contains("true")) {
-                    Toast.makeText(CartActivity.this,"Paid!",Toast.LENGTH_LONG);
+                if (true == responseString.equals("true")) {
+                    String email = UserEmailFetcher.getEmail(CartActivity.this.getApplicationContext());
+                    //
                 }
             }
 
@@ -211,5 +214,8 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         itemsList = mCart.cartProducts;
         adapter.itemsList = itemsList;
         adapter.notifyDataSetChanged();
+
+        ActionBar actionbar=getActionBar();
+        actionbar.setTitle("your text");
     }
 }
