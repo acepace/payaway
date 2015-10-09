@@ -79,6 +79,11 @@ public class CartManager {
         return totalPrice;
     }
 
+    public String getTotalPriceString() {
+        BigDecimal bd = getTotalPrice();
+        return bd.toString()+" ₪";
+    }
+
     public int getTotalItems()
     {
         int total = 0;

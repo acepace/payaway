@@ -2,6 +2,8 @@ package dgd.payaway;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -125,7 +127,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
                 Customization customization = new Customization.CustomizationBuilder()
                         .primaryDescription("Shopping cart")
                         .secondaryDescription(mCart.getTotalItems() + " Items")
-                        .amount(mCart.getTotalPrice().toString()+"₪")
+                        .amount(mCart.getTotalPriceString())
                         .submitButtonText("Purchase")
                         .build();
                 intent.putExtra(BraintreePaymentActivity.EXTRA_CUSTOMIZATION, customization);
@@ -221,7 +223,8 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         adapter.itemsList = itemsList;
         adapter.notifyDataSetChanged();
 
-        //ActionBar actionbar=getActionBar();
-        //actionbar.setTitle("your text");
+        setTitle(mCart.getTotalPriceString());
+
+
     }
 }
