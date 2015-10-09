@@ -39,8 +39,8 @@ public class ChainFinder {
     public static void GetNearbyStores(final Context context,Location searchLocation, JsonHttpResponseHandler handler) {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("latitude", 32.0914021);
-        params.put("longitude", 34.7825062);
+        params.put("latitude", searchLocation.getLatitude());
+        params.put("longitude", searchLocation.getLongitude());
 
         client.get(context, "http://payaway.me/api/store", null, params,handler);
     }

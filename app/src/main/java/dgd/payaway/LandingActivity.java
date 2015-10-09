@@ -124,7 +124,7 @@ public class LandingActivity extends AppCompatActivity implements
 
                 }
             };
-
+            Log.i(TAG,"sending " + mLastLocation.toString());
             ChainFinder.GetNearbyStores(this,mLastLocation,handler);
         } else {
             Toast.makeText(this, R.string.no_location_detected, Toast.LENGTH_LONG).show();
