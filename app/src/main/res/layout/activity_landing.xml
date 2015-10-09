@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Loading nearby stores..."
+                android:text="Loading nearby stores..."
                 android:textIsSelectable="true"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#FFFFFF" />

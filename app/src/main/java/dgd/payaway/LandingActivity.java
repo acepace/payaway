@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import utils.CartManager;
 import utils.ChainFinder;
 import utils.Store;
 
