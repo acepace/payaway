@@ -30,9 +30,6 @@ import utils.CartManager;
 import utils.ChainFinder;
 import utils.Store;
 
-/**
- * Created by galpeer on 10/8/15.
- */
 public class LandingActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
 {
@@ -179,7 +176,7 @@ public class LandingActivity extends AppCompatActivity implements
 
         Intent intent = new Intent(getApplicationContext(), CartActivity.class);
         if (null == pickedStore){
-            Toast.makeText(this,"Wait for stores to load!", Toast.LENGTH_LONG);
+            Toast.makeText(this,"Wait for stores to load!", Toast.LENGTH_LONG).show();
             return;
         }
         intent.putExtra("pickedStore",pickedStore);

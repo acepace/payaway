@@ -52,11 +52,11 @@ public class CartManager {
     }
 
     public interface OnCartInitCallback {
-        public void OnCartInit(boolean success, String cartID);
+        void OnCartInit(boolean success, String cartID);
     }
 
     public interface OnCartItemsCallback {
-        public void OnCartItemsLoaded();
+        void OnCartItemsLoaded();
 
     }
 
@@ -104,7 +104,7 @@ public class CartManager {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(cartID);
+                    Log.i(TAG,"Cart ID is"+ cartID);
                     callback.OnCartInit(true, cartID);
                 }
 
@@ -128,12 +128,8 @@ public class CartManager {
                     // called when request is retried
                 }
             });
-        } catch (JSONException e) {
+        } catch (JSONException | UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-
         }
     }
 
@@ -161,13 +157,7 @@ public class CartManager {
                     Log.i(TAG,"Finished parsing carting");
                     callback.OnCartItemsLoaded();
                     //WT
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (JsonMappingException e) {
-                    e.printStackTrace();
-                } catch (JsonParseException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
             }

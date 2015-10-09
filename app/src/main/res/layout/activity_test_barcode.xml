@@ -54,7 +54,8 @@
                 android:textSize="30dp"
                 android:textColor="#ffffff"
                 android:background="#3498db"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:enabled="false" />
 
             <EditText
                 android:id="@+id/quantity"
@@ -63,7 +64,7 @@
                 android:inputType="number"
                 android:gravity="center"
                 android:focusable="false"
-                android:text="0"
+                android:text="1"
                 android:background="#ffffff"/>
 
             <Button
@@ -74,7 +75,9 @@
                 android:layout_gravity="left"
                 android:textSize="30dp"
                 android:textColor="#ffffff"
-                android:background="#3498db"/>
+                android:background="#3498db"
+
+                android:enabled="false" />
         </LinearLayout>
             <Button
                 android:id="@+id/confirm"

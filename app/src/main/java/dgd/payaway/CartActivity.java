@@ -53,6 +53,8 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         mCart.initCart(this,new CartManager.OnCartInitCallback(){
             @Override
             public void OnCartInit(boolean success, String CartID){
+                ImageButton productChooserButton = (ImageButton) findViewById(R.id.imageButton);
+                productChooserButton.setEnabled(true);
                 mCart.loadCartData();
             }
         });
@@ -61,10 +63,11 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ImageButton productChooserButton = (ImageButton) findViewById(R.id.imageButton);
-
+        productChooserButton.setEnabled(false); //untill we have a cart
         productChooserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i = new Intent(getApplicationContext(), TestBarcode.class);
                 i.putExtra("cartID",mCart.getCartID());
                 startActivityForResult(i, 0x100);
@@ -107,8 +110,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
-        boolean bool =  super.onCreateOptionsMenu(menu);
-        return bool;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -190,8 +192,8 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 // Successfully got a response
                 Log.i(TAG, "Suceeded to send payment nonce");
-                if (true == responseString.equals("true")) {
-                    String email = UserEmailFetcher.getEmail(CartActivity.this.getApplicationContext());
+                if (responseString.equals("true")) {
+
                     //
                 }
             }
@@ -215,7 +217,7 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         adapter.itemsList = itemsList;
         adapter.notifyDataSetChanged();
 
-        ActionBar actionbar=getActionBar();
-        actionbar.setTitle("your text");
+        //ActionBar actionbar=getActionBar();
+        //actionbar.setTitle("your text");
     }
 }

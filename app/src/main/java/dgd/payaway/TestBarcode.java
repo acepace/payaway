@@ -133,19 +133,21 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
         if (p == null) {
             mScannerView.stopCamera();
             mScannerView.startCamera();
-            Toast.makeText(this,"Failed to find product.", Toast.LENGTH_LONG);
+            Toast.makeText(this,"Failed to find product.", Toast.LENGTH_LONG).show();
             return;
         }
         mProd = p;
-
+        findViewById(R.id.btn_plus).setEnabled(true);
+        findViewById(R.id.btn_minus).setEnabled(true);
         TextView tv = (TextView) findViewById(R.id.ProdNameLbl);
         tv.setText(mProd.Name);
-        String price = "0.00$";
+        String price = "0.00₪";
         if (mProd.Amount == 0) {
-             price = new DecimalFormat("(#0.##₪)").format(mProd.Price);
-        } else {
-            price = new DecimalFormat("#0.##₪").format(mProd.TotalPrice);
+            mProd.Amount = 1;
         }
+
+
+        price = new DecimalFormat("#0.##₪").format(mProd.getTotalPrice());
 
         TextView pl = (TextView) findViewById(R.id.ProdPriceLbl);
         pl.setText(price);
