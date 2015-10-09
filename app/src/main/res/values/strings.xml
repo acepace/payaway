@@ -63,7 +63,7 @@
     <string name="customer">Customer</string>
     <string name="customer_summary">The customer id to use</string>
     <string name="no_location_detected">No location detected</string>
-    <string name="nearbyStores">תבחר את החנות...</string>
+    <string name="nearbyStores">Pick up a store</string>
     <string name="title_activity_checkout">Checkout</string>
 
 </resources>
