@@ -98,9 +98,12 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
             {
                 // callback for swipe to dismiss, removing item from data and adapter
+                Product removedProduct = itemsList.get(viewHolder.getAdapterPosition());
+                removedProduct.Amount = (-removedProduct.Amount);
+                Product.updateProduct(CartActivity.this,mCart.getCartID(),removedProduct);
                 itemsList.remove(viewHolder.getAdapterPosition());
-                //TODO: Update the server about deleting
                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                updateTotal();
             }
         });
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
@@ -223,8 +226,12 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         adapter.itemsList = itemsList;
         adapter.notifyDataSetChanged();
 
+        updateTotal();
+
+
+    }
+
+    private void updateTotal() {
         setTitle(mCart.getTotalPriceString());
-
-
     }
 }
