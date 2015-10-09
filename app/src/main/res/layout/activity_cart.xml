@@ -23,5 +23,49 @@
         android:clickable="true"
         android:onClick="onClick"/>
     </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88666666"
+        android:id="@+id/top_layout">
+
+        <ImageButton
+            android:layout_margin="15dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/ic_add_to_cart"
+            android:id="@+id/fake_image_button"
+            android:layout_gravity="right|bottom"
+            android:clickable="true"
+            android:onClick="onClick"/>
+
+        <TextView
+            android:text="Click here to add an item to your cart"
+            android:id="@+id/ivInstruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:clickable="false"
+            android:scaleType="center"
+            android:src="@drawable/pa_icon"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginLeft="50dp"
+            android:textColor="#FFFFFFFF"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow_tut"
+            android:layout_gravity="center_horizontal|bottom|right"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="120dp" />
+
+    </FrameLayout>
 
 </RelativeLayout>

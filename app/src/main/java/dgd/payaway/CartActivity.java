@@ -65,15 +65,24 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ImageButton productChooserButton = (ImageButton) findViewById(R.id.imageButton);
+        ImageButton fakeChooserButton = (ImageButton) findViewById(R.id.fake_image_button);
+        fakeChooserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                navigateToTestBarcode();
+                findViewById(R.id.top_layout).setVisibility(View.INVISIBLE);
+            }
+        });
         productChooserButton.setEnabled(false); //untill we have a cart
         productChooserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(getApplicationContext(), TestBarcode.class);
-                i.putExtra("cartID",mCart.getCartID());
-                startActivityForResult(i, 0x100);
+                navigateToTestBarcode();
             }
+
+
         });
 
         ArrayList<Product> it = new ArrayList<Product>();
@@ -83,6 +92,12 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
 
         initSwipeToDismissTouchHelper();
 
+    }
+
+    private void navigateToTestBarcode() {
+        Intent i = new Intent(getApplicationContext(), TestBarcode.class);
+        i.putExtra("cartID",mCart.getCartID());
+        startActivityForResult(i, 0x100);
     }
 
     private void initSwipeToDismissTouchHelper() {

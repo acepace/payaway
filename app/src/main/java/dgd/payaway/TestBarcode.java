@@ -1,6 +1,7 @@
 package dgd.payaway;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -152,6 +155,13 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
         numItemsEt.setText(String.valueOf(mProd.Amount));
         TextView pl = (TextView) findViewById(R.id.ProdPriceLbl);
         pl.setText(price);
+//        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.zk_layout);
+//        linearLayout.removeView(mScannerView);
+//        ImageView imageView = new ImageView(getApplicationContext());
+//        imageView.setMinimumWidth(280);
+//        imageView.setMinimumHeight(325);
+//        imageView.setBackground(Drawable.createFromPath("@drawable/pa_icon"));
+//        linearLayout.addView(imageView);
 
     }
 
