@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/pa_icon"
@@ -18,7 +17,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".TestBarcode"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name=".LandingActivity"
@@ -36,7 +35,6 @@
             android:theme="@style/AppTheme" >
         </activity>
 
-
         <!-- Required to use Drop-In -->
         <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity" />
 
@@ -45,13 +43,21 @@
         <activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />
         <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
         <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.PayPalTouchActivity"
+        <activity
+            android:name="com.paypal.android.sdk.payments.PayPalTouchActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <service android:name="com.paypal.android.sdk.payments.PayPalService"
+
+        <service
+            android:name="com.paypal.android.sdk.payments.PayPalService"
             android:exported="false" />
 
         <!-- Required to use 3D Secure -->
         <activity android:name="com.braintreepayments.api.threedsecure.ThreeDSecureWebViewActivity" />
+        <activity
+            android:name=".Checkout"
+            android:label="@string/title_activity_checkout"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
