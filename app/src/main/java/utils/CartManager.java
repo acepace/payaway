@@ -2,12 +2,21 @@ package utils;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.loopj.android.http.*;
 
 import org.json.JSONArray;
@@ -18,6 +27,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -39,6 +49,9 @@ public class CartManager {
 
     private OnCartItemsCallback callback;
 
+
+    private static final int WHITE = 0xFFFFFFFF;
+    private static final int BLACK = 0xFF000000;
 
     public CartManager(String userID,String chainID,String storeID,OnCartItemsCallback callback)
     {
@@ -175,12 +188,42 @@ public class CartManager {
                 // Pull out the first event on the public timeline
                 System.out.println(TAG+"yayArray");
                 Log.e(TAG, "Received array instead of object");
-
-
-
-
             }
         });
+    }
+
+    public Bitmap generateQRtoken()
+    {
+        Bitmap bitmap = null;
+        try {
+            bitmap = encodeAsBitmap(cartToken);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    private Bitmap encodeAsBitmap(String str) throws WriterException {
+        BitMatrix result;
+        try {
+            result = new MultiFormatWriter().encode(str,
+                    BarcodeFormat.QR_CODE, 125, 125, null);
+        } catch (IllegalArgumentException iae) {
+            // Unsupported format
+            return null;
+        }
+        int w = result.getWidth();
+        int h = result.getHeight();
+        int[] pixels = new int[w * h];
+        for (int y = 0; y < h; y++) {
+            int offset = y * w;
+            for (int x = 0; x < w; x++) {
+                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(pixels, 0, 125, 0, 0, w, h);
+        return bitmap;
     }
 }
 

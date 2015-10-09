@@ -38,4 +38,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:8.1.0'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.3.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.0'
+    compile 'com.google.zxing:core:2.2'
 }
