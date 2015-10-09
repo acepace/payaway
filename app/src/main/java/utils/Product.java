@@ -94,6 +94,19 @@ public class Product implements Parcelable {
         TotalPrice = new BigDecimal(in.readString());
     }
 
+    @Override public boolean equals( Object  other ) {
+        if (!(other instanceof Product)) {
+            return false;
+        }
+        Product that = (Product) other;
+        return (that.ProductId.equals(this.ProductId));
+
+    }
+
+    @Override public int hashCode() {
+        return ProductId.hashCode();
+    }
+
     public static void getProduct(Context context,String CartID, final String ProductID,final onProductLoadedCallback callback)
     {
 

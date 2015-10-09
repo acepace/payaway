@@ -172,13 +172,24 @@ public class CartActivity extends ActionBarActivity implements CartManager.OnCar
                     break;
                 case 1:
                     Product newProd = data.getParcelableExtra("Product");
-                    mCart.cartProducts.add(newProd);
+                    updateProduct(newProd);
                     OnCartItemsLoaded();
                     break;
 
                 default:
                     break;
             }
+        }
+    }
+
+    private void updateProduct(Product newProd) {
+        //if it exists
+        int prodIndex = mCart.cartProducts.indexOf(newProd);
+
+        if (-1 == prodIndex) {
+            mCart.cartProducts.add(newProd);
+        } else {
+            mCart.cartProducts.get(prodIndex).Amount = newProd.Amount;
         }
     }
 

@@ -35,7 +35,7 @@ public class LandingActivity extends AppCompatActivity implements
 
     protected static final String TAG = "LandingActivity";
     private List<Store> mNearbyStores;
-    private Store pickedStore;
+    private Store pickedStore = null;
 
     protected GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;

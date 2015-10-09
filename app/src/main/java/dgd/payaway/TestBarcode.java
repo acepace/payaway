@@ -165,7 +165,7 @@ public class TestBarcode extends AppCompatActivity implements ZBarScannerView.Re
 
     public void onConfirmClick(View v)
     {
-        Product.updateProduct(this,mCartID,mProd);
+        Product.updateProduct(this,mCartID,mProd); //adds even if exists
         Intent data = new Intent();
         data.putExtra("Product",mProd);
         setResult(1, data);
